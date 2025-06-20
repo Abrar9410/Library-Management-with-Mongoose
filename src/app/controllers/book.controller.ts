@@ -109,7 +109,7 @@ bookRoutes.delete("/:bookId", async (req: Request, res: Response) => {
     try {
         const bookId: string = req.params.bookId;
 
-        const data = await Book.findByIdAndDelete(bookId, { new: true });
+        const data = await Book.findByIdAndDelete(bookId);
 
         res.send({
             success: true,
