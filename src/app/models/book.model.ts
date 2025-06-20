@@ -25,7 +25,7 @@ const bookSchema = new Schema<Ibook, bookStaticMethod>(
         isbn: {
             type: String,
             required: [true, "The ISBN of the book is not given!"],
-            unique: [true, "The book of this ISBN already exists!"],
+            unique: true,
             trim: true
         },
         description: { type: String, trim: true },
