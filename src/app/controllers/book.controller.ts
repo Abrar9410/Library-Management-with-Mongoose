@@ -78,4 +78,27 @@ bookRoutes.get("/:bookId", async (req: Request, res: Response) => {
             error
         })
     }
+});
+
+
+// PUT API
+bookRoutes.put("/:bookId", async (req: Request, res: Response) => {
+    try {
+        const bookId: string = req.params.bookId;
+        const body = req.body;
+
+        const data = await Book.findByIdAndUpdate(bookId, body, {new: true, runValidators: true});
+
+        res.send({
+            success: true,
+            message: "Book updated successfully",
+            data
+        })
+    } catch (error) {
+        res.send({
+            success: false,
+            message: "Book could not be updated!",
+            error
+        })
+    }
 })
