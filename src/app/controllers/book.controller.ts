@@ -101,4 +101,26 @@ bookRoutes.put("/:bookId", async (req: Request, res: Response) => {
             error
         })
     }
-})
+});
+
+
+// DELETE API
+bookRoutes.delete("/:bookId", async (req: Request, res: Response) => {
+    try {
+        const bookId: string = req.params.bookId;
+
+        const data = await Book.findByIdAndDelete(bookId, { new: true });
+
+        res.send({
+            success: true,
+            message: "Book deleted successfully",
+            data: null
+        })
+    } catch (error) {
+        res.send({
+            success: false,
+            message: "Book could not be deleted!",
+            error
+        })
+    }
+});
