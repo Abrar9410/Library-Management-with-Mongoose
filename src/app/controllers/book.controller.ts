@@ -4,6 +4,7 @@ import { Ibook } from "../interfaces/book.interface";
 
 export const bookRoutes = express.Router();
 
+// POST API
 bookRoutes.post("/", async (req: Request, res: Response) => {
     try {
         const book = req.body;
@@ -28,6 +29,7 @@ bookRoutes.post("/", async (req: Request, res: Response) => {
 });
 
 
+// GET APIs
 bookRoutes.get("/", async (req: Request, res: Response) => {
     try {
         const filterBy: string = req.query.filter as string;
@@ -51,8 +53,29 @@ bookRoutes.get("/", async (req: Request, res: Response) => {
     } catch (error) {
         res.send({
             success: false,
-            message: "Validation failed",
+            message: "Books could not be retrieved!",
             error
         })
     }
 });
+
+
+bookRoutes.get("/:bookId", async (req: Request, res: Response) => {
+    try {
+        const bookId: string = req.params.bookId;
+        
+        const data = await Book.findById(bookId);
+
+        res.send({
+            success: true,
+            message: "Book retrieved successfully",
+            data
+        })
+    } catch (error) {
+        res.send({
+            success: false,
+            message: "Book could not be retrieved!",
+            error
+        })
+    }
+})
