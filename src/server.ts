@@ -2,13 +2,13 @@ import mongoose from "mongoose";
 import config from "./config";
 import app from "./app";
 
-const PORT = config.port || 5000;
+const PORT = process.env.port || 5000;
 
 async function main() {
     try {
         await mongoose.connect(config.db_url!);
 
-        console.log("Database Connected!");
+        // console.log("Database Connected!");
     } catch (error) {
 
     }
@@ -17,5 +17,5 @@ async function main() {
 main();
 
 app.listen(PORT, () => {
-    console.log("App is listening on port", PORT);
+    // console.log("App is listening on port", PORT);
 })
