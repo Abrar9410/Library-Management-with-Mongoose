@@ -11,13 +11,13 @@ borrowRoutes.post("/", async (req: Request, res: Response) => {
         const data = new Borrow(borrow);
         await data.save();
 
-        res.send({
+        res.status(200).send({
             success: true,
             message: "Book borrowed successfully",
             data
         })
     } catch (error: any) {
-        res.send({
+        res.status(400).send({
             success: false,
             message: "Book could not be borrowed!",
             error
@@ -54,13 +54,13 @@ borrowRoutes.get("/", async (req: Request, res: Response) => {
         ]
         const data = await Borrow.aggregate(pipelines);
 
-        res.send({
+        res.status(200).send({
             success: true,
             message: "Borrowed books summary retrieved successfully",
             data
         });
     } catch (error) {
-        res.send({
+        res.status(404).send({
             success: false,
             message: "Borrowed books summary could not be retrieved!",
             error

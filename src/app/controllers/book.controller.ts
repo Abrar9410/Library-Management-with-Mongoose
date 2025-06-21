@@ -20,7 +20,7 @@ bookRoutes.post("/", async (req: Request, res: Response) => {
             data
         })
     } catch (error) {
-        res.send({
+        res.status(400).send({
             success: false,
             message: "Validation failed",
             error
@@ -45,13 +45,13 @@ bookRoutes.get("/", async (req: Request, res: Response) => {
 
         const data = await Book.find(filter).sort([[`${sortBy || "_id"}`, `${sort}`]]).limit(limit);
 
-        res.send({
+        res.status(200).send({
             success: true,
             message: "Books retrieved successfully",
             data
         });
     } catch (error) {
-        res.send({
+        res.status(404).send({
             success: false,
             message: "Books could not be retrieved!",
             error
@@ -60,19 +60,26 @@ bookRoutes.get("/", async (req: Request, res: Response) => {
 });
 
 
-bookRoutes.get("/:bookId", async (req: Request, res: Response) => {
+bookRoutes.get("/:bookId", async (req: Request, res: Response): Promise<any> => {
     try {
         const bookId = req.params.bookId;
         
         const data = await Book.findById(bookId);
 
-        res.send({
+        if (!data) {
+            return res.status(404).send({
+                success: false,
+                message: "Book is not found!"
+            })
+        }
+
+        res.status(200).send({
             success: true,
             message: "Book retrieved successfully",
             data
         })
     } catch (error) {
-        res.send({
+        res.status(404).send({
             success: false,
             message: "Book could not be retrieved!",
             error
@@ -94,13 +101,13 @@ bookRoutes.put("/:bookId", async (req: Request, res: Response) => {
 
         const data = await Book.findByIdAndUpdate(bookId, body, {new: true, runValidators: true});
 
-        res.send({
+        res.status(200).send({
             success: true,
             message: "Book updated successfully",
             data
         })
     } catch (error) {
-        res.send({
+        res.status(400).send({
             success: false,
             message: "Book could not be updated!",
             error
@@ -116,13 +123,13 @@ bookRoutes.delete("/:bookId", async (req: Request, res: Response) => {
 
         const data = await Book.findByIdAndDelete(bookId);
 
-        res.send({
+        res.status(200).send({
             success: true,
             message: "Book deleted successfully",
             data: null
         })
     } catch (error) {
-        res.send({
+        res.status(404).send({
             success: false,
             message: "Book could not be deleted!",
             error
