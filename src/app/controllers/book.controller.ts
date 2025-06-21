@@ -62,7 +62,7 @@ bookRoutes.get("/", async (req: Request, res: Response) => {
 
 bookRoutes.get("/:bookId", async (req: Request, res: Response) => {
     try {
-        const bookId: string = req.params.bookId;
+        const bookId = req.params.bookId;
         
         const data = await Book.findById(bookId);
 
@@ -84,8 +84,13 @@ bookRoutes.get("/:bookId", async (req: Request, res: Response) => {
 // PUT API
 bookRoutes.put("/:bookId", async (req: Request, res: Response) => {
     try {
-        const bookId: string = req.params.bookId;
+        const bookId = req.params.bookId;
         const body = req.body;
+
+        if (body.copies) {
+            const available = Book.checkAvailability(body.copies);
+            body.available = available;
+        }
 
         const data = await Book.findByIdAndUpdate(bookId, body, {new: true, runValidators: true});
 
@@ -107,7 +112,7 @@ bookRoutes.put("/:bookId", async (req: Request, res: Response) => {
 // DELETE API
 bookRoutes.delete("/:bookId", async (req: Request, res: Response) => {
     try {
-        const bookId: string = req.params.bookId;
+        const bookId = req.params.bookId;
 
         const data = await Book.findByIdAndDelete(bookId);
 
