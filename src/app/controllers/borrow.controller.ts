@@ -23,4 +23,47 @@ borrowRoutes.post("/", async (req: Request, res: Response) => {
             error
         })        
     }
+});
+
+
+// GET API
+borrowRoutes.get("/", async (req: Request, res: Response) => {
+    try {
+        const pipelines = [
+            {
+                $group: { _id: "$book", totalQuantity: { $sum: "$quantity" } }
+            },
+            {
+                $lookup: {
+                    from: "books",
+                    localField: "_id",
+                    foreignField: "_id",
+                    as: "book"
+                }
+            },
+            {
+                $unwind: "$book"
+            },
+            {
+                $project: {
+                    _id: 0,
+                    book: { title: "$book.title", isbn: "$book.isbn" },
+                    totalQuantity: 1
+                }
+            }
+        ]
+        const data = await Borrow.aggregate(pipelines);
+
+        res.send({
+            success: true,
+            message: "Borrowed books summary retrieved successfully",
+            data
+        })
+    } catch (error) {
+        res.send({
+            success: false,
+            message: "Borrowed books summary could not br retrieved!",
+            error
+        })
+    }
 })
