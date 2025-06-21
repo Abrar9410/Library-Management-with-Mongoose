@@ -8,14 +8,14 @@ async function main() {
     try {
         await mongoose.connect(config.db_url!);
 
-        console.log("Database Connected!");
+        // console.log("Database Connected!");
     } catch (error) {
-
+        // console.log(error);
     }
 }
 
 main();
 
 app.listen(PORT, () => {
-    console.log("App is listening on port", PORT);
+    // console.log("App is listening on port", PORT);
 })

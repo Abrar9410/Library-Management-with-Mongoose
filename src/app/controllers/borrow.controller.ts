@@ -58,12 +58,12 @@ borrowRoutes.get("/", async (req: Request, res: Response) => {
             success: true,
             message: "Borrowed books summary retrieved successfully",
             data
-        })
+        });
     } catch (error) {
         res.send({
             success: false,
-            message: "Borrowed books summary could not br retrieved!",
+            message: "Borrowed books summary could not be retrieved!",
             error
         })
     }
-})
+});
