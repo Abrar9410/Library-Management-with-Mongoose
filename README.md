@@ -4,7 +4,7 @@ A RESTful API built with **Express**, **TypeScript**, and **MongoDB (Mongoose)**
 
 ---
 
-## 📌 Features
+## Features
 
 - ✅ **Book Management** (Create, Read, Update, Delete)
 - ✅ **Borrowing System** with availability checks and due dates
@@ -17,7 +17,7 @@ A RESTful API built with **Express**, **TypeScript**, and **MongoDB (Mongoose)**
 
 ---
 
-## 🧱 Tech Stack
+## Tech Stack
 
 - **Node.js**
 - **Express**
@@ -27,7 +27,7 @@ A RESTful API built with **Express**, **TypeScript**, and **MongoDB (Mongoose)**
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```plaintext
 src/
@@ -42,7 +42,7 @@ src/
 
 ---
 
-## 🚀 Getting Started
+## Project Setup in Local System
 
 ### 1️⃣ Clone the Repository
 
@@ -85,9 +85,9 @@ npm start
 
 ---
 
-## 📮 API Endpoints
+## API Endpoints
 
-### 📘 Book Endpoints
+### Book Endpoints
 
 - **POST** `/api/books` – Create a new book  
 - **GET** `/api/books` – Get all books (with optional filtering, sorting, and limiting)  
@@ -101,14 +101,14 @@ npm start
 GET /api/books?filter=FANTASY&sortBy=createdAt&sort=desc&limit=5
 ```
 
-### 📙 Borrow Endpoints
+### Borrow Endpoints
 
 - **POST** `/api/borrow` – Borrow a book with quantity and due date  
 - **GET** `/api/borrow` – Get summary of borrowed books using MongoDB aggregation  
 
 ---
 
-## 🛡️ Validation & Business Logic
+## Validation & Business Logic
 
 - `title`, `author`, `genre`, `isbn`, and `copies` are **required** fields
 - `genre` must be one of:
@@ -129,7 +129,7 @@ GET /api/books?filter=FANTASY&sortBy=createdAt&sort=desc&limit=5
 
 ---
 
-## 🧪 Example Borrow Summary Response
+## Example Borrow Summary Response
 
 ```json
 {
@@ -156,7 +156,7 @@ GET /api/books?filter=FANTASY&sortBy=createdAt&sort=desc&limit=5
 
 ---
 
-## 📦 Scripts
+## Scripts
 
 | Script         | Description                           |
 |----------------|---------------------------------------|
