@@ -36,6 +36,7 @@ bookRoutes.get("/", async (req: Request, res: Response) => {
         const sortBy: keyof Ibook | "createdAt" | "updatedAt" = req.query.sortBy as keyof Ibook | "createdAt" | "updatedAt"
         const sort: "asc" | "desc" = req.query.sort as "asc" | "desc" || "asc";
         const limit: number = parseInt(req.query.limit as string) || 10;
+        const skip: number = parseInt(req.query.skip as string) || 0;
 
         let filter: object = {};
 
@@ -43,7 +44,7 @@ bookRoutes.get("/", async (req: Request, res: Response) => {
             filter = {genre: filterBy};
         };
 
-        const data = await Book.find(filter).sort([[`${sortBy || "_id"}`, `${sort}`]]).limit(limit);
+        const data = await Book.find(filter).sort([[`${sortBy || "_id"}`, `${sort}`]]).skip(skip).limit(limit);
 
         res.status(200).send({
             success: true,

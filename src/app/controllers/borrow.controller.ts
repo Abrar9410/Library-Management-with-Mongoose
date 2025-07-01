@@ -29,6 +29,8 @@ borrowRoutes.post("/", async (req: Request, res: Response) => {
 // GET API
 borrowRoutes.get("/", async (req: Request, res: Response) => {
     try {
+        const limit: number = parseInt(req.query.limit as string) || 10;
+        const skip: number = parseInt(req.query.skip as string) || 0;
         const pipelines = [
             {
                 $group: { _id: "$book", totalQuantity: { $sum: "$quantity" } }
@@ -51,8 +53,8 @@ borrowRoutes.get("/", async (req: Request, res: Response) => {
                     totalQuantity: 1
                 }
             }
-        ]
-        const data = await Borrow.aggregate(pipelines);
+        ];
+        const data = await Borrow.aggregate(pipelines).skip(skip).limit(limit);
 
         res.status(200).send({
             success: true,
