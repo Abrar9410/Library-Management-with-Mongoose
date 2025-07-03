@@ -35,7 +35,7 @@ bookRoutes.get("/", async (req: Request, res: Response) => {
         const filterBy: string = req.query.filter as string;
         const sortBy: keyof Ibook | "createdAt" | "updatedAt" = req.query.sortBy as keyof Ibook | "createdAt" | "updatedAt"
         const sort: "asc" | "desc" = req.query.sort as "asc" | "desc" || "asc";
-        const limit: number = parseInt(req.query.limit as string) || 10;
+        const limit: number = parseInt(req.query.limit as string) || 0;
         const skip: number = parseInt(req.query.skip as string) || 0;
 
         let filter: object = {};
