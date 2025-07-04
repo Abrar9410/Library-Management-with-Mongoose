@@ -54,7 +54,7 @@ borrowRoutes.get("/", async (req: Request, res: Response) => {
         const sortCriteria: {[key: string]: 1 | -1;} = {};
         sortCriteria[sortField] = sortOrder;
 
-        const limit: number = parseInt(req.query.limit as string) || 10;
+        const limit: number = parseInt(req.query.limit as string) || 0;
         const skip: number = parseInt(req.query.skip as string) || 0;
         const pipelines = [
             {
