@@ -7,7 +7,7 @@ const app: Application = express();
 
 app.use(express.json());
 app.use(cors({
-    origin: ['http://localhost:5173'],
+    origin: ['http://localhost:5173', 'https://bookcrate-library-management.netlify.app'],
     credentials: true
 }));
 
