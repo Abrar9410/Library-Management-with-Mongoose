@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { Borrow } from "../models/borrow.model";
+import { PipelineStage } from "mongoose";
 
 
 export const borrowRoutes = express.Router();
@@ -56,7 +57,7 @@ borrowRoutes.get("/", async (req: Request, res: Response) => {
 
         const limit: number = parseInt(req.query.limit as string) || 0;
         const skip: number = parseInt(req.query.skip as string) || 0;
-        const pipelines = [
+        const pipelines: PipelineStage[] = [
             {
                 $group: { _id: "$book", totalQuantity: { $sum: "$quantity" } }
             },
@@ -80,9 +81,17 @@ borrowRoutes.get("/", async (req: Request, res: Response) => {
             },
             {
                 $sort: sortCriteria
-            }
+            },
         ];
-        const data = await Borrow.aggregate(pipelines).skip(skip).limit(limit);
+
+        if (skip && skip>0) {
+            pipelines.push({$skip: skip})
+        };
+        
+        if (limit && limit>0) {
+            pipelines.push({$limit: limit})
+        };
+        const data = await Borrow.aggregate(pipelines);
 
         res.status(200).send({
             success: true,
